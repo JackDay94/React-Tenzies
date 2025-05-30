@@ -8,13 +8,19 @@ function App() {
     return new Array(10).fill(0).map(() => Math.ceil(Math.random() * 6));
   }
 
-  const diceElements = dice.map(num => <Die value={num} />)
+  function rollDice() {
+    setDice(generateAllNewDice);
+  }
+
+  const diceElements = dice.map((num) => <Die value={num} />);
 
   return (
     <main>
-      <div className="button-container">
+      <div className="dice-container">
         {diceElements}
       </div>
+
+      <button className="roll-dice" onClick={rollDice}>Roll Dice</button>
     </main>
   );
 }
