@@ -16,7 +16,9 @@ function App() {
   }
 
   function rollDice() {
-    setDice(generateAllNewDice);
+    setDice(prevDice => prevDice.map(dice => 
+      dice.isHeld === false ? {...dice, value: Math.ceil(Math.random() * 6)} : dice
+    ));
   }
 
   function hold(id) {
