@@ -6,10 +6,9 @@ import Confetti from "react-confetti";
 function App() {
   const [dice, setDice] = React.useState(() => generateAllNewDice());
 
-  const gameWon = (
+  const gameWon =
     dice.every((die) => die.isHeld) &&
-    dice.every((die) => die.value === dice[0].value)
-  )
+    dice.every((die) => die.value === dice[0].value);
 
   function generateAllNewDice() {
     return new Array(10).fill(0).map(() => ({
@@ -54,9 +53,21 @@ function App() {
   return (
     <main>
       {gameWon && <Confetti />}
+      <div className="sr-only" aria-live="polite">
+        {gameWon && (
+          <p>
+            Congratulations! You won the game! Click "New Game" to start a new
+            game.
+          </p>
+        )}
+      </div>
       <div className="dice-container">{diceElements}</div>
 
-      <button className="roll-dice" onClick={gameWon ? newGame : rollDice}>
+      <button
+        className="roll-dice"
+        onClick={gameWon ? newGame : rollDice}
+        aria-label={gameWon ? "Start New Game" : "Roll Dice"}
+      >
         {gameWon ? "New Game" : "Roll Dice"}
       </button>
     </main>
