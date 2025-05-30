@@ -1,9 +1,10 @@
 import Die from "./components/Die";
 import React from "react";
 import { nanoid } from "nanoid";
+import Confetti from "react-confetti";
 
 function App() {
-  const [dice, setDice] = React.useState(generateAllNewDice);
+  const [dice, setDice] = React.useState(() => generateAllNewDice());
 
   const gameWon = (
     dice.every((die) => die.isHeld) &&
@@ -48,6 +49,7 @@ function App() {
 
   return (
     <main>
+      {gameWon && <Confetti />}
       <div className="dice-container">{diceElements}</div>
 
       <button className="roll-dice" onClick={rollDice}>
