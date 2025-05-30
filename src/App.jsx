@@ -37,6 +37,10 @@ function App() {
     );
   }
 
+  function newGame() {
+    setDice(generateAllNewDice());
+  }
+
   const diceElements = dice.map((dieObj) => (
     <Die
       key={dieObj.id}
@@ -52,7 +56,7 @@ function App() {
       {gameWon && <Confetti />}
       <div className="dice-container">{diceElements}</div>
 
-      <button className="roll-dice" onClick={rollDice}>
+      <button className="roll-dice" onClick={gameWon ? newGame : rollDice}>
         {gameWon ? "New Game" : "Roll Dice"}
       </button>
     </main>
