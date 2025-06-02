@@ -62,7 +62,7 @@ function App() {
     setDice(generateAllNewDice());
     setRolls(0);
   }
-  
+
   // Map over the dice array to create an array of Die components.
   const diceElements = dice.map((dieObj) => (
     <Die
@@ -79,11 +79,13 @@ function App() {
    * @returns The best score from localStorage or the current rolls if no best score exists.
    */
   function setBestScore() {
-    const bestScore = localStorage.getItem("bestScore") || rolls;
+    const bestScore = localStorage.getItem("bestScore");
     if (!bestScore || rolls < bestScore) {
       localStorage.setItem("bestScore", rolls);
+      return rolls;
+    } else {
+      return bestScore;
     }
-    return bestScore;
   }
 
   // Focus the "New Game" button when the game is won.
@@ -106,7 +108,7 @@ function App() {
           </p>
         )}
       </div>
-      
+
       <h1 className="title">Tenzies</h1>
       <p className="instructions">
         Click a die to hold the value or release the held value. You win when
@@ -117,12 +119,12 @@ function App() {
         <p className="win-message">
           You won! You rolled a total of {<strong>{rolls}</strong>} times!
           <br />
-          Your best score is: {<strong>{setBestScore()}</strong>}
+          Your best score is: {<strong>{setBestScore()}</strong>} rolls.
         </p>
       )}
       {/* Die elements display */}
       <div className="dice-container">{diceElements}</div>
-      
+
       <button
         className="roll-dice"
         onClick={gameWon ? newGame : rollDice}
