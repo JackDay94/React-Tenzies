@@ -1,4 +1,5 @@
 export default function Die(props) {
+  // This component represents a single die in the Tenzies game.
   return (
     <button
       style={{ backgroundColor: props.isHeld ? "#59E391" : "white" }}
