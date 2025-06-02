@@ -56,6 +56,14 @@ function App() {
     />
   ));
 
+  function setBestScore() {
+    const bestScore = localStorage.getItem("bestScore");
+    if (!bestScore || rolls < bestScore) {
+      localStorage.setItem("bestScore", rolls);
+    }
+    return bestScore;
+  }
+
   React.useEffect(() => {
     if (gameWon) {
       newGameRef.current.focus();
@@ -81,6 +89,8 @@ function App() {
       {gameWon && (
         <p className="win-message">
           You won! You rolled a total of {<strong>{rolls}</strong>} times!
+          <br />
+          Your best score is: {<strong>{setBestScore()}</strong>}
         </p>
       )}
       <div className="dice-container">{diceElements}</div>
