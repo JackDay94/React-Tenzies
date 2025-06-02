@@ -10,6 +10,10 @@ function App() {
     dice.every((die) => die.isHeld) &&
     dice.every((die) => die.value === dice[0].value);
 
+  const newGameRef = React.useRef(null);
+
+  const [rolls, setRolls] = React.useState(0);
+
   function generateAllNewDice() {
     return new Array(10).fill(0).map(() => ({
       value: Math.ceil(Math.random() * 6),
@@ -26,6 +30,7 @@ function App() {
           : dice
       )
     );
+    setRolls((prevRolls) => prevRolls + 1);
   }
 
   function hold(id) {
@@ -38,6 +43,7 @@ function App() {
 
   function newGame() {
     setDice(generateAllNewDice());
+    setRolls(0);
   }
 
   const diceElements = dice.map((dieObj) => (
@@ -49,6 +55,12 @@ function App() {
       id={dieObj.id}
     />
   ));
+
+  React.useEffect(() => {
+    if (gameWon) {
+      newGameRef.current.focus();
+    }
+  }, [gameWon]);
 
   return (
     <main>
@@ -66,12 +78,18 @@ function App() {
         Click a die to hold the value or release the held value. You win when
         all die have the same value.
       </p>
+      {gameWon && (
+        <p className="win-message">
+          You won! You rolled a total of {<strong>{rolls}</strong>} times!
+        </p>
+      )}
       <div className="dice-container">{diceElements}</div>
 
       <button
         className="roll-dice"
         onClick={gameWon ? newGame : rollDice}
         aria-label={gameWon ? "Start New Game" : "Roll Dice"}
+        ref={newGameRef}
       >
         {gameWon ? "New Game" : "Roll Dice"}
       </button>
