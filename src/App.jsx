@@ -61,6 +61,11 @@ function App() {
           </p>
         )}
       </div>
+      <h1 className="title">Tenzies</h1>
+      <p className="instructions">
+        Click a die to hold the value or release the held value. You win when
+        all die have the same value.
+      </p>
       <div className="dice-container">{diceElements}</div>
 
       <button
